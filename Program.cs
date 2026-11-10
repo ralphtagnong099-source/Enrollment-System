@@ -2,14 +2,12 @@
 using System.Net.Mail;
 using System.Text;
 
-// Change the server if you use full SQL Server, e.g. "Server=localhost;..." or "Server=.\\SQLEXPRESS;..."
 const string ConnStr =
     "Server=TAGNONG;Database=EnrollmentDB;Trusted_Connection=True;TrustServerCertificate=True;";
     
 Console.Title = "Student Enrollment System";
 Console.WriteLine("=========== STUDENT ENROLLMENT SYSTEM ===========\n");
 
-// Step 1: Fill out form + submit requirements. Repeat until information is complete.
 string name, email;
 while (true)
 {
@@ -32,7 +30,7 @@ Console.WriteLine("\nInformation verified.\n");
 
 try
 {
-    // Step 2: Select subjects
+
     var subjects = LoadSubjects();
     List<SubjectItem> chosen;
     while (true)
@@ -50,7 +48,6 @@ try
         Console.WriteLine("No valid subjects selected. Try again.\n");
     }
 
-    // Step 3: Confirm enrollment
     Console.WriteLine("\nYou selected:");
     foreach (var s in chosen) Console.WriteLine($"  {s.Code} - {s.Name}");
     if (!AskYesNo("\nConfirm enrollment? (y/n): "))
@@ -59,7 +56,6 @@ try
         return;
     }
 
-    // Step 4: Save and generate receipt
     var (receiptNo, saved) = SaveEnrollment(name, email, chosen);
     if (saved.Count == 0)
     {
@@ -77,7 +73,6 @@ catch (Exception ex)
 Console.WriteLine("\nPress any key to exit...");
 Console.ReadKey();
 
-// ---------------- helpers ----------------
 
 static string Ask(string prompt)
 {
